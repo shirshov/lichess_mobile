@@ -1,0 +1,14 @@
+name: multistockfish_sf16
+description: Web stub for multistockfish_sf16 package
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.2
+  flutter: 3.47.2
+
+flutter:
+  plugin:
+    platforms:
+      web:
+        pluginClass: MultistockfishSf16Web

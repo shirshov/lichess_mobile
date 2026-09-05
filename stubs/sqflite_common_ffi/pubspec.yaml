@@ -1,0 +1,14 @@
+name: sqflite_common_ffi
+description: Web stub for sqflite_common_ffi package
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.2
+  flutter: 3.47.2
+
+flutter:
+  plugin:
+    platforms:
+      web:
+        pluginClass: SqfliteCommonFfiWeb

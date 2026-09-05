@@ -1,0 +1,14 @@
+name: lc0
+description: Web stub for lc0 package
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.2
+  flutter: 3.47.2
+
+flutter:
+  plugin:
+    platforms:
+      web:
+        pluginClass: Lc0Web
