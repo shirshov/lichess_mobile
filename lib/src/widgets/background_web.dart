@@ -5,4 +5,7 @@ import 'package:material_ui/material_ui.dart';
 
 const kBackgroundImageBlurFactor = 8.0;
 
-DecorationImage? buildBackgroundDecorationImage(dynamic appDocumentsDirectory, BackgroundImage backgroundImage) => null;
+DecorationImage buildBackgroundDecorationImage(dynamic appDocumentsDirectory, BackgroundImage backgroundImage) => DecorationImage(
+  image: const NetworkImage(''),
+  fit: BoxFit.cover,
+);

@@ -18,8 +18,8 @@ typedef PreloadedData = ({
   AuthUser? authUser,
   String sri,
   int engineMaxMemoryInMb,
-  dynamic? appDocumentsDirectory,
-  dynamic? appSupportDirectory,
+  dynamic appDocumentsDirectory,
+  dynamic appSupportDirectory,
 });
 
 final preloadedDataProvider = FutureProvider<PreloadedData>((Ref ref) async {
@@ -31,16 +31,12 @@ final preloadedDataProvider = FutureProvider<PreloadedData>((Ref ref) async {
     sri,
     authUser,
     physicalMemory,
-    appDocumentsDirectory,
-    appSupportDirectory,
   ) = await (
     PackageInfo.fromPlatform(),
     DeviceInfoPlugin().deviceInfo,
     _readOrCreateSri(),
     authStorage.read(),
     System.instance.getTotalRam(),
-    _getDirectoryOrNull(getApplicationDocumentsDirectory),
-    _getDirectoryOrNull(getApplicationSupportDirectory),
   ).wait;
 
   final token = authUser?.token;
@@ -68,8 +64,8 @@ final preloadedDataProvider = FutureProvider<PreloadedData>((Ref ref) async {
     authUser: authUser,
     sri: sri,
     engineMaxMemoryInMb: engineMaxMemoryFor(physicalMemory ?? 256),
-    appDocumentsDirectory: appDocumentsDirectory,
-    appSupportDirectory: appSupportDirectory,
+    appDocumentsDirectory: null,
+    appSupportDirectory: null,
   );
 }, name: 'PreloadedDataProvider');
 
@@ -84,8 +80,4 @@ Future<String> _readOrCreateSri() async {
     await SecureStorage.instance.deleteAll();
     return genRandomString(12);
   }
-}
-
-Future<dynamic> _getDirectoryOrNull(Future<dynamic> Function() getDirectory) async {
-  return null;
 }

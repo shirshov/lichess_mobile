@@ -12,7 +12,7 @@ class System {
 
   Future<({String package, String? version})?> getDefaultBrowser() async => null;
 
-  Future<bool> clearUserData() async => true;
+  Future<bool> clearUserData() async => false;
 }
 
 final androidVersionProvider = FutureProvider<AndroidBuildVersion?>((ref) async => null);
