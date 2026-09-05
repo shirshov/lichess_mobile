@@ -1,3 +1,10 @@
+/// Lichess Mobile entry point.
+///
+/// Web builds use conditional imports throughout the codebase: files that depend on
+/// `dart:io`, native engine packages (`lc0`, `multistockfish`), or platform-specific APIs are split
+/// into `<name>_web.dart` / `<name>_native.dart` pairs with a conditional import in `<name>.dart`.
+/// See e.g. `src/network/socket.dart`, `src/model/engine/engine_transport.dart`,
+/// `src/model/engine/position_evaluator.dart`, `src/model/correspondence/correspondence_service.dart`.
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
