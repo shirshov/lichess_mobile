@@ -1,24 +1,17 @@
-import 'dart:io' show Directory, File;
 import 'dart:ui' show ImageFilter;
 
-import 'package:cupertino_ui/cupertino_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lichess_mobile/src/model/common/preloaded_data.dart';
 import 'package:lichess_mobile/src/model/settings/general_preferences.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'background_native.dart' if (dart.library_html) 'background_web.dart';
+
 const kBackgroundImageBlurFactor = 8.0;
 
-/// Applies the configured theme to the child widget.
-///
-/// The background can be a color or an image. If an image is provided, it will be used instead of
-/// the color, and the color will be ignored.
-///
-/// Since the background image is always full screen, this widget should be used to wrap only [Scaffold] widgets.
 class FullScreenBackground extends ConsumerWidget {
   const FullScreenBackground({required this.child, super.key});
 
-  /// The child widget to apply the theme to.
   final Widget child;
 
   @override
@@ -47,10 +40,6 @@ class FullScreenBackground extends ConsumerWidget {
   }
 }
 
-/// Applies a background image theme to the child widget.
-///
-/// The image is always sized to cover the full screen, and the image is blurred if requested.
-/// This is intended to be used with [Scaffold] or [CupertinoPageScaffold] as the child.
 class FullScreenBackgroundImage extends StatefulWidget {
   const FullScreenBackgroundImage({
     required this.backgroundImage,
@@ -61,7 +50,7 @@ class FullScreenBackgroundImage extends StatefulWidget {
 
   final BackgroundImage backgroundImage;
   final Size viewport;
-  final Directory appDocumentsDirectory;
+  final dynamic appDocumentsDirectory;
   final Widget child;
 
   static Size imageFitSize(BoxFit boxFit, Size imageSize, Size viewportSize) => switch (boxFit) {
@@ -134,11 +123,7 @@ class _FullScreenBackgroundImageState extends State<FullScreenBackgroundImage> {
       widget.viewport,
     );
 
-    final baseTheme = BackgroundImage.getTheme(widget.backgroundImage.seedColor);
-    final filterColor = BackgroundImage.getFilterColor(
-      baseTheme.colorScheme.surface,
-      widget.backgroundImage.meanLuminance,
-    );
+    final decorationImage = buildBackgroundDecorationImage(widget.appDocumentsDirectory, widget.backgroundImage);
 
     return Stack(
       children: [
@@ -160,13 +145,7 @@ class _FullScreenBackgroundImageState extends State<FullScreenBackgroundImage> {
             },
             decoration: BoxDecoration(
               color: widget.backgroundImage.seedColor,
-              image: DecorationImage(
-                image: FileImage(
-                  File('${widget.appDocumentsDirectory.path}/${widget.backgroundImage.path}'),
-                ),
-                fit: boxFit,
-                colorFilter: ColorFilter.mode(filterColor, BlendMode.srcOver),
-              ),
+              image: decorationImage,
             ),
             child: ClipRect(
               child: BackdropFilter(

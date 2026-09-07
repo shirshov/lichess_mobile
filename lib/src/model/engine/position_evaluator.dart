@@ -22,7 +22,6 @@ import 'package:lichess_mobile/src/model/engine/work.dart';
 import 'package:lichess_mobile/src/tab_navigation.dart';
 import 'package:lichess_mobile/src/widgets/feedback.dart';
 import 'package:logging/logging.dart';
-import 'package:multistockfish/multistockfish.dart';
 
 final _logger = Logger('PositionEvaluator');
 

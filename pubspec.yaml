@@ -106,32 +106,58 @@ dev_dependencies:
 # The engine plugin branch pins native package versions that are not published yet. Remove this
 # whole block, and restore a pub.dev version under `multistockfish` above, once they are.
 dependency_overrides:
-  # dartchess is pinned to the Zobrist hashing the opening book keys on (0.14.0, unreleased).
-  # Remove once dartchess 0.14.0 is on pub.dev and the constraint above is bumped.
-  dartchess:
-    git:
-      url: https://github.com/lichess-org/dartchess.git
-      ref: ed64d8a58ea16e3597f71a037ff0f50733b8604d
+  lc0:
+    web:
+      path: stubs/lc0
+    default:
+      git:
+        url: https://github.com/lichess-org/dart-lc0.git
+        ref: b75077349a1d16c1999daa063ffb144060916f20
+  multistockfish:
+    web:
+      path: stubs/multistockfish
+    default:
+      git:
+        url: https://github.com/lichess-org/dart-multistockfish.git
+        ref: 50b1c4f6c53ad76429bfdfb118f9ebc8c8d2848a
+        path: pkgs/multistockfish
   multistockfish_chess:
-    git:
-      url: https://github.com/lichess-org/dart-multistockfish.git
-      ref: 50b1c4f6c53ad76429bfdfb118f9ebc8c8d2848a
-      path: pkgs/multistockfish_chess
+    web:
+      path: stubs/multistockfish_chess
+    default:
+      git:
+        url: https://github.com/lichess-org/dart-multistockfish.git
+        ref: 50b1c4f6c53ad76429bfdfb118f9ebc8c8d2848a
+        path: pkgs/multistockfish_chess
   multistockfish_sf16:
-    git:
-      url: https://github.com/lichess-org/dart-multistockfish.git
-      ref: 50b1c4f6c53ad76429bfdfb118f9ebc8c8d2848a
-      path: pkgs/multistockfish_sf16
+    web:
+      path: stubs/multistockfish_sf16
+    default:
+      git:
+        url: https://github.com/lichess-org/dart-multistockfish.git
+        ref: 50b1c4f6c53ad76429bfdfb118f9ebc8c8d2848a
+        path: pkgs/multistockfish_sf16
   multistockfish_variant:
-    git:
-      url: https://github.com/lichess-org/dart-multistockfish.git
-      ref: 50b1c4f6c53ad76429bfdfb118f9ebc8c8d2848a
-      path: pkgs/multistockfish_variant
+    web:
+      path: stubs/multistockfish_variant
+    default:
+      git:
+        url: https://github.com/lichess-org/dart-multistockfish.git
+        ref: 50b1c4f6c53ad76429bfdfb118f9ebc8c8d2848a
+        path: pkgs/multistockfish_variant
+  sqflite_common_ffi:
+    web:
+      path: stubs/sqflite_common_ffi
+    default:
+      hosted:
+        name: sqflite_common_ffi
+        url: https://pub.dev
+      version: ^2.4.2+1
 
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  web:
+    device_pixel_ratio: 1.0
+    strategy: tba
   uses-material-design: true
 
   assets:

@@ -1,14 +1,14 @@
 import 'dart:async';
-import 'dart:io';
 
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:home_widget/home_widget.dart';
 import 'package:l10n_esperanto/l10n_esperanto.dart';
 import 'package:lichess_mobile/l10n/l10n.dart';
 import 'package:lichess_mobile/src/app_links_service.dart';
 import 'package:lichess_mobile/src/binding.dart';
 import 'package:lichess_mobile/src/constants.dart';
+import 'package:lichess_mobile/src/home_widget_setup.dart';
 import 'package:lichess_mobile/src/model/account/account_repository.dart';
 import 'package:lichess_mobile/src/model/account/account_service.dart';
 import 'package:lichess_mobile/src/model/account/ongoing_games_notifier.dart';
@@ -35,14 +35,6 @@ import 'package:lichess_mobile/src/theme.dart';
 import 'package:lichess_mobile/src/utils/screen.dart';
 import 'package:material_ui/material_ui.dart';
 
-const String _kIosAppGroupId = 'group.org.lichess.mobileV2.LichessWidgets';
-const List<String> _kIosBlogWidgetKinds = [
-  'OfficialBlogWidget',
-  'CommunityBlogWidget',
-  'UserBlogFeedWidget',
-];
-
-/// Application initialization and main entry point.
 class AppInitializationScreen extends ConsumerWidget {
   const AppInitializationScreen({super.key});
 
@@ -149,33 +141,8 @@ class _AppState extends ConsumerState<Application> {
     ref.read(sharedPgnServiceProvider).start();
     ref.read(broadcastServiceProvider).start();
 
-    if (Platform.isIOS) {
-      HomeWidget.setAppGroupId(_kIosAppGroupId);
-    }
-    HomeWidget.saveWidgetData<String>('lichessHost', kLichessHost);
-
-    if (Platform.isIOS) {
-      ref.listenManual(kidModeProvider, (prev, state) {
-        if (state.hasValue && prev?.value != state.value) {
-          HomeWidget.saveWidgetData<bool>('isKidMode', state.value).then((_) {
-            Future.wait([
-              for (final kind in _kIosBlogWidgetKinds) HomeWidget.updateWidget(iOSName: kind),
-            ]);
-          });
-        }
-      }, fireImmediately: true);
-      ref.listenManual(boardPreferencesProvider, (prev, state) {
-        if (prev == null ||
-            prev.boardTheme != state.boardTheme ||
-            prev.pieceSet != state.pieceSet) {
-          Future.wait([
-            HomeWidget.saveWidgetData<String>('boardTheme', state.boardTheme.name),
-            HomeWidget.saveWidgetData<String>('pieceSet', state.pieceSet.name),
-          ]).then((_) {
-            HomeWidget.updateWidget(iOSName: 'DailyPuzzleLargeWidget');
-          });
-        }
-      }, fireImmediately: true);
+    if (!kIsWeb) {
+      setupHomeWidget(ref);
     }
 
     // Listen for connectivity changes and perform actions accordingly.
