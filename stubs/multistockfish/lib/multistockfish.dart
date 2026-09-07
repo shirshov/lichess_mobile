@@ -1,1 +1,1 @@
-export 'src/lc0_stub.dart';
+export 'src/multistockfish_web.dart';

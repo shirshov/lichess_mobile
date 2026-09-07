@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:sqflite_common_ffi/src/sqflite_ffi_stub.dart'
-    show SqfliteFfiStub;
-
 DatabaseFactory get databaseFactoryFfi => SqfliteFfiStub();
 
 typedef OnDatabaseVersionChange = FutureOr<void> Function(int? oldVersion, int? newVersion);
